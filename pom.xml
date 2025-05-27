@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent> <!-- colocamos la etiqueta padre springframework para utilizar todo lo que ofrece spring (herencia) -->
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.4.4</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <groupId>com.mycompany.app</groupId>
+  <artifactId>spring-microservices</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>spring-microservices</name>
+  <packaging>pom</packaging> <!-- pom: le dice a maven que este será un contenedor de proyectos, no un proyecto en sí que se pueda levantar -->
+
+  <modules> <!-- indicamos los módulos hijos -->
+    <module>microservice-gateway</module>
+    <module>microservice-eureka</module>
+    <module>microservice-config</module>
+    <module>microservice-auth</module>
+    <module>microservice-incidents</module>
+    <module>microservice-users</module>
+    <module>microservice-patrols</module>
+    <module>microservice-patrolassignments</module>
+    <module>microservice-incidentassignments</module>
+  </modules>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>17</maven.compiler.release>
+  </properties>
+
+
+  <dependencies>
+    <!-- todos los subproyectos (microservicios) van a utilizar esta dependencia -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.32</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
