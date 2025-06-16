@@ -1,4 +1,4 @@
-package com.microservice.patrolassignments.entities;
+package com.microservice.patrols.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

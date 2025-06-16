@@ -25,8 +25,8 @@
     <module>microservice-incidents</module>
     <module>microservice-users</module>
     <module>microservice-patrols</module>
-    <module>microservice-patrolassignments</module>
-    <module>microservice-incidentassignments</module>
+    <!--<module>microservice-patrolassignments</module>
+    <module>microservice-incidentassignments</module>-->
   </modules>
 
   <properties>

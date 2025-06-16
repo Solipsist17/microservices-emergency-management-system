@@ -8,8 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="microservice-gateway" />
-        <module name="microservice-incidentassignments" />
-        <module name="microservice-patrolassignments" />
         <module name="microservice-config" />
         <module name="microservice-auth" />
         <module name="microservice-incidents" />
@@ -18,6 +16,10 @@
         <module name="microservice-patrols" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="microservice-incidentassignments" target="17" />
+      <module name="microservice-patrolassignments" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
