@@ -2,28 +2,15 @@ server:
   port: 8090
 
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   application:
-    security:
-      jwt:
-        secret-key:
-
-        expiration:
-        refresh-token:
-          expiration:
     name: msvc-auth
   config:
     import: optional:configserver:http://localhost:8888 # path del config server
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/msvc_auth_db
-    username: root
-    password: root
-  jpa:
-    hibernate:
-      ddl-auto: create
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-
+jwt:
+  expiration: 3600000
 eureka:
   instance:
     hostname: localhost

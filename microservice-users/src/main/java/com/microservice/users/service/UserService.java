@@ -39,6 +39,13 @@ public class UserService {
         return userRepository.findAll(pageable).map(user -> new UserSummaryDTO(user));
     }
 
+    public UserSummaryDTO findByEmailSingle(String email) {
+        return userRepository.findByEmail(email)
+                .map(UserSummaryDTO::new)
+                .orElseThrow(()-> new EntityNotFoundException("Este email para el usuario no fue encontrado: "
+                        + email));
+    }
+
     public UserResponseDTO update(Long id, UpdateUserDTO datos) {
         // validación existencia del usuario por id
         if (!userRepository.existsById(id)) {

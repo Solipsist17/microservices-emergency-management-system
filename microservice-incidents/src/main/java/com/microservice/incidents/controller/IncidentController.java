@@ -6,6 +6,7 @@ import com.microservice.incidents.dto.IncidentSummaryDTO;
 import com.microservice.incidents.dto.UpdateIncidentDTO;
 import com.microservice.incidents.service.IncidentService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ public class IncidentController {
     public IncidentController(IncidentService incidentService){ this.incidentService = incidentService; }
 
     @PostMapping
-    public ResponseEntity<IncidentResponseDTO> createIncident(@RequestBody CreateIncidentDTO createIncidentDTO) {
+    public ResponseEntity<IncidentResponseDTO> createIncident(@RequestBody @Valid CreateIncidentDTO createIncidentDTO) {
         IncidentResponseDTO incidentResponseDTO = incidentService.create(createIncidentDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(incidentResponseDTO);
     }
@@ -36,7 +37,7 @@ public class IncidentController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<IncidentResponseDTO> updateIncident(@PathVariable Long id,
-                                                              @RequestBody UpdateIncidentDTO updateIncidentDTO){
+                                                              @RequestBody @Valid UpdateIncidentDTO updateIncidentDTO){
         return ResponseEntity.ok(incidentService.update(id, updateIncidentDTO));
     }
 
