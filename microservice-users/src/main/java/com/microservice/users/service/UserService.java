@@ -6,6 +6,7 @@ import com.microservice.users.dto.UserResponseDTO;
 import com.microservice.users.dto.UserSummaryDTO;
 import com.microservice.users.entities.Role;
 import com.microservice.users.entities.User;
+import com.microservice.users.exception.UserNotFoundException;
 import com.microservice.users.persistence.UserRepository;
 import com.microservice.users.validation.UserValidator;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,6 +38,11 @@ public class UserService {
 
     public Page<UserSummaryDTO> findAll(Pageable pageable) {
         return userRepository.findAll(pageable).map(user -> new UserSummaryDTO(user));
+    }
+
+    public UserSummaryDTO findById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return new UserSummaryDTO(user);
     }
 
     public UserResponseDTO update(Long id, UpdateUserDTO datos) {

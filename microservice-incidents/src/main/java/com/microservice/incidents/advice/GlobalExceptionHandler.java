@@ -1,20 +1,18 @@
-package com.microservice.users.advice;
+package com.microservice.incidents.advice;
 
-import com.microservice.users.exception.BadRequestException;
-import com.microservice.users.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@RestControllerAdvice // manejador global de errores para los RestController
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-
     // maneja las excepciones lanzadas cuando fallan las validaciones @Valid en un @RequestBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -25,6 +23,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    /*
     // Captura los errores personalizados como BadRequestException
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Map<String, String>> handleBadRequest(BadRequestException ex) {
@@ -32,14 +31,14 @@ public class GlobalExceptionHandler {
         error.put(ex.getField(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+    */
 
-    // lanzar 401 unauthorized
-    // Maneja error de usuario no existente respondiendo con un 404 "error: usuario no encontrado con ID: "
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity handleUserNotFound(UserNotFoundException ex) {
+    // maneja error 404 de UserExistenceValidator "Usuario no encontrado con ID: "
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<Map<String, String>> handleResponseStatus(ResponseStatusException ex) {
         Map<String, String> error = new HashMap<>();
-        error.put("error", ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        error.put("error", ex.getReason());
+        return new ResponseEntity<>(error, ex.getStatusCode());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
@@ -48,5 +47,4 @@ public class GlobalExceptionHandler {
         error.put("error", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-
 }

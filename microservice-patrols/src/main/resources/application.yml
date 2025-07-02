@@ -1,14 +1,14 @@
 server:
-  port: 9090
+  port: 8082
 
 spring:
   application:
-    name: msvc-incidents
+    name: msvc-patrols
   config:
     import: optional:configserver:http://localhost:8888 # path del config server
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/msvc_incidents_db
+    url: jdbc:mysql://localhost:3306/msvc_patrols_db
     username: root
     password: 1234
   jpa:

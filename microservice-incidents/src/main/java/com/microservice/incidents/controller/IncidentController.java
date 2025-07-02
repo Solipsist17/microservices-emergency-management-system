@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/incidents")
@@ -23,14 +26,22 @@ public class IncidentController {
     public IncidentController(IncidentService incidentService){ this.incidentService = incidentService; }
 
     @PostMapping
-    public ResponseEntity<IncidentResponseDTO> createIncident(@RequestBody CreateIncidentDTO createIncidentDTO) {
+    public ResponseEntity<IncidentResponseDTO> createIncident(@RequestBody CreateIncidentDTO createIncidentDTO,
+                                                              UriComponentsBuilder uriComponentsBuilder) {
         IncidentResponseDTO incidentResponseDTO = incidentService.create(createIncidentDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(incidentResponseDTO);
+        URI url = uriComponentsBuilder.path("/api/incidents/{id}").buildAndExpand(incidentResponseDTO.id()).toUri();
+        //return ResponseEntity.status(HttpStatus.CREATED).body(incidentResponseDTO);
+        return ResponseEntity.created(url).body(incidentResponseDTO);
     }
     @GetMapping
     public ResponseEntity<Page<IncidentSummaryDTO>> getAllIncidents(@PageableDefault(size = 10, sort = "createdAt", page=0)
                                                                      Pageable pageable){
         return ResponseEntity.ok(incidentService.findAll(pageable));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IncidentSummaryDTO> getIncidentById(@PathVariable Long id) {
+        return ResponseEntity.ok(incidentService.findById(id));
     }
 
     @PutMapping("/{id}")

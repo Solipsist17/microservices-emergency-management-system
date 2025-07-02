@@ -41,6 +41,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll(pageable)); // 200 status code
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findById(id));
+    }
+
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id,

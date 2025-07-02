@@ -4,6 +4,7 @@ import com.microservice.users.entities.Role;
 import com.microservice.users.entities.User;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 // name y lastName pueden ser nulos en user ciudadano
 public record UserSummaryDTO(Long id, String dni, String name, String lastName, String email, String phoneNumber,
