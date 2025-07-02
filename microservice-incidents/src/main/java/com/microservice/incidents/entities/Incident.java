@@ -50,7 +50,7 @@ public class Incident {
         //this.priority = dto.priority();
         this.latitude = dto.latitude();
         this.longitude = dto.longitude();
-        this.reportedBy = dto.reportedBy();
+        //this.reportedBy = dto.reportedBy();
     }
 
     public Incident(Long id) {

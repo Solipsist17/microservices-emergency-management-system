@@ -19,7 +19,7 @@ public class UserExistenceValidator implements IncidentValidator {
     }
     @Override
     public void validate(CreateIncidentDTO datos) {
-        try {
+        /*try {
             UserResponseDTO user = userClient.getUserById(datos.reportedBy());
         } catch (FeignException.NotFound ex) {
             // feign captura la excepción del global handler de usuario solo sabiendo que fue un 404
@@ -27,6 +27,6 @@ public class UserExistenceValidator implements IncidentValidator {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con ID: " + datos.reportedBy());
         } catch (FeignException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Error al consultar el servicio de usuarios");
-        }
+        }*/
     }
 }

@@ -1,0 +1,29 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  config:
+    import: optional:configserver:http://localhost:8888 # path del config server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: users
+          uri: lb://msvc-users
+          predicates:
+            - Path=/api/users/**
+        - id: patrols
+          uri: lb://msvc-patrols
+          predicates:
+            - Path=/api/patrols/**
+        - id: incidents
+          uri: lb://msvc-incidents
+          predicates:
+            - Path=/api/incidents/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG

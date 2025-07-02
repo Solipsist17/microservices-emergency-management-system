@@ -44,7 +44,7 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return new UserSummaryDTO(user);
     }
-    
+
     public UserSummaryDTO findByEmailSingle(String email) {
         return userRepository.findByEmail(email)
                 .map(UserSummaryDTO::new)
