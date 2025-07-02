@@ -1,9 +1,6 @@
 package com.microservice.users.controller;
 
-import com.microservice.users.dto.CreateUserDTO;
-import com.microservice.users.dto.UpdateUserDTO;
-import com.microservice.users.dto.UserResponseDTO;
-import com.microservice.users.dto.UserSummaryDTO;
+import com.microservice.users.dto.*;
 import com.microservice.users.entities.User;
 import com.microservice.users.service.IUserService;
 import com.microservice.users.service.UserService;
@@ -44,6 +41,15 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.findById(id));
+    }
+    @GetMapping("/by-email")
+    public ResponseEntity<UserSummaryDTO> getByEmail(@RequestParam String email){
+        UserSummaryDTO user = userService.findByEmailSingle(email);
+        System.out.println(user);
+        if (user == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{id}")

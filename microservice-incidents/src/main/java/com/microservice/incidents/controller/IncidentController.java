@@ -6,6 +6,7 @@ import com.microservice.incidents.dto.IncidentSummaryDTO;
 import com.microservice.incidents.dto.UpdateIncidentDTO;
 import com.microservice.incidents.service.IncidentService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +48,7 @@ public class IncidentController {
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<IncidentResponseDTO> updateIncident(@PathVariable Long id,
-                                                              @RequestBody UpdateIncidentDTO updateIncidentDTO){
+                                                              @RequestBody @Valid UpdateIncidentDTO updateIncidentDTO){
         return ResponseEntity.ok(incidentService.update(id, updateIncidentDTO));
     }
 
