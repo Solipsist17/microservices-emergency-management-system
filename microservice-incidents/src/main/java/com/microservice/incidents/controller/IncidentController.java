@@ -28,8 +28,11 @@ public class IncidentController {
 
     @PostMapping
     public ResponseEntity<IncidentResponseDTO> createIncident(@RequestBody CreateIncidentDTO createIncidentDTO,
+                                                              @RequestHeader("X-User-Id") String userId, // viene desde el gateway
                                                               UriComponentsBuilder uriComponentsBuilder) {
-        IncidentResponseDTO incidentResponseDTO = incidentService.create(createIncidentDTO);
+        System.out.println("Desde msvc Incident createIncident, userId: " + userId);
+
+        IncidentResponseDTO incidentResponseDTO = incidentService.create(createIncidentDTO, userId);
         URI url = uriComponentsBuilder.path("/api/incidents/{id}").buildAndExpand(incidentResponseDTO.id()).toUri();
         //return ResponseEntity.status(HttpStatus.CREATED).body(incidentResponseDTO);
         return ResponseEntity.created(url).body(incidentResponseDTO);

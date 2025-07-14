@@ -30,12 +30,30 @@ public class IncidentService {
         this.validators = validators;
     }
 
-    public IncidentResponseDTO create(CreateIncidentDTO datos){
-        validators.forEach(v -> v.validate(datos)); // validar existencia de usuario
-        // validar que el usuario sea CITIZEN
+    public IncidentResponseDTO create(CreateIncidentDTO datos, String userId){
+        //validators.forEach(v -> v.validate(datos));
 
+        // validar existencia de usuario
+        try {
+            UserResponseDTO user = userClient.getUserById(Long.parseLong(userId));
+
+            // validar que el usuario sea CITIZEN
+            if (!user.role().equals("CITIZEN")) {
+
+                System.out.println("ROL: " + user.role());
+                throw new ResponseStatusException(
+                        HttpStatus.FORBIDDEN, "El usuario no tiene el rol de CITIZEN para realizar esta operación.");
+            }
+
+            // capturamos las excepciones del global handler de usuario
+        } catch (FeignException.NotFound ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con ID: " + userId);
+        } catch (FeignException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Error al consultar el servicio de usuarios");
+        }
 
         Incident incident = new Incident(datos);
+        incident.setReportedBy(Long.parseLong(userId));
         return new IncidentResponseDTO(incidentRepository.save(incident));
     }
 

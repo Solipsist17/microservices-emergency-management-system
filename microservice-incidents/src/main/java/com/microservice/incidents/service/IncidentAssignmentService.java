@@ -35,6 +35,9 @@ public class IncidentAssignmentService {
     }
 
     public IncidentAssignmentResponseDTO create(CreateIncidentAssignmentDTO datos) {
+        // obtener el userId por parte del header que modifica el gateway
+        
+
         // 1. validar que el incidente exista
         Incident incident = incidentRepository.findById(datos.incidentId()).orElseThrow(() ->
                 new EntityNotFoundException("Incidente no encontrado con ID: " + datos.incidentId()));
@@ -58,12 +61,19 @@ public class IncidentAssignmentService {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY, "Error al consultar el servicio de usuarios");
         }
 
+        // 3. en caso el policía tenga patrulla entonces validar que la patrulla exista ¿? no es necesario esto
+        // 3. en caso tenga patrol entonces validar que exista y validar que corresponda al usuario en su turno
+        // o tal vez el dto no deba contener el patrol_id y eso lo deba verificar que exista el propio backend
 
         // verificar si el policía tiene patrulla y en caso tenga asignarle un patrolId
         // patrolClient.getPatrolAssignmentsByUserId(datos.userId());
         // al hacer esto eliminar el paso 3. ya que la patrulla sí existe cuando se hace esta validación
 
-        // 3. en caso el policía tenga patrulla entonces validar que la patrulla exista ¿? no es necesario esto
+
+        // actualizar el estado del incidente a IN_PROCESS
+        // incidentClient.update(incidentId);
+
+
         if (datos.patrolId() != null) {
             try {
                 PatrolResponseDTO patrol = patrolClient.getPatrolById(datos.patrolId());

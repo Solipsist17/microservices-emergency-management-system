@@ -2,11 +2,11 @@ server:
   port: 8090
 
 spring:
+  application:
+    name: msvc-auth
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-  application:
-    name: msvc-auth
   config:
     import: optional:configserver:http://localhost:8888 # path del config server
 jwt:

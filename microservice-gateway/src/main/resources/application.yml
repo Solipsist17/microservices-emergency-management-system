@@ -24,6 +24,10 @@ spring:
           uri: lb://msvc-incidents
           predicates:
             - Path=/api/incidents/**
+        - id: auth
+          uri: lb://msvc-auth
+          predicates:
+            - Path=/api/auth/**
 logging:
   level:
     org.springframework.cloud.gateway: DEBUG

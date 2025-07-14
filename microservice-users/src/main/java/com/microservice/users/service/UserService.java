@@ -41,7 +41,8 @@ public class UserService {
     }
 
     public UserSummaryDTO findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(
+                "Este ID para el usuario para el usuario no fue encontrado: " + id));
         return new UserSummaryDTO(user);
     }
 

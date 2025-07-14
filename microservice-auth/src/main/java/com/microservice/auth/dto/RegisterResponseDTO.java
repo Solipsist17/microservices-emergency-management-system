@@ -1,17 +1,10 @@
 package com.microservice.auth.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-
-
-
-public record UserInfoDTO(
+public record RegisterResponseDTO(
         Long id,
         String dni,
         String email,
         String phoneNumber,
         String password,
-        String role
-) {
-
+        String role) {
 }

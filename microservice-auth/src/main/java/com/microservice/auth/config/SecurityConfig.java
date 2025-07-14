@@ -15,6 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    // aunque los opendEnpoints son manejados por el AuthenticationFilter del msvc gateway
+    // igualmente es necesario permitir todos los endpoints ya que al usar spring security (aunque sea solo para hashear)
+    // bloquea por defecto todos los endpoints si no lo especificamos
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
