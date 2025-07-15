@@ -36,7 +36,7 @@ public class IncidentAssignmentService {
 
     public IncidentAssignmentResponseDTO create(CreateIncidentAssignmentDTO datos) {
         // obtener el userId por parte del header que modifica el gateway
-        
+
 
         // 1. validar que el incidente exista
         Incident incident = incidentRepository.findById(datos.incidentId()).orElseThrow(() ->

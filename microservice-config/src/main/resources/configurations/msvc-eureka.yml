@@ -1,0 +1,15 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: msvc-eureka
+
+eureka:
+  instance:
+    hostname: localhost # dirección asociada para el microservicio
+  client:
+    register-with-eureka: false # no se registra a sí mismo pq es el servidor eureka
+    fetch-registry: false # no mantener copia local del registro de servicios del servidor eureka (proveer el registro, no consumirlo)
+    server-url:
+      defaultZone: http://localhost:${server.port}/eureka/ # path de servidores eureka a los que este cliente debe conectarse
